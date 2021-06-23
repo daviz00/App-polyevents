@@ -1,8 +1,10 @@
-import userReducer from "./UserReducer";
+import isUserLoggedReducer from "./isUserLoggedReducer";
 import { combineReducers } from "redux";
+import activeRouteReducer from "./ActiveRouteReducer";
 
 const rootReducer = combineReducers({
-	userReducer,
+	isUserLoggedReducer: isUserLoggedReducer,
+	activeRouteReducer: activeRouteReducer,
 });
 
 export default rootReducer;
