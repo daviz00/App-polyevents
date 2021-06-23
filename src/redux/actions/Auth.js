@@ -9,3 +9,10 @@ export const logout = () => {
 		type: "LOG_OUT",
 	};
 };
+
+export const onboardingGoogleInfo = (info) => {
+	return {
+		type: "GOOGLE_INFO",
+		payload: info,
+	};
+};

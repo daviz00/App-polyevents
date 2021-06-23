@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { useDispatch } from "react-redux";
 
 import { getToken } from "../utils/AsyncStorage";
@@ -22,7 +22,7 @@ const SplashScreen = ({ setSplash }) => {
 
 	return (
 		<View style={styles.container}>
-			<LogoComponent size={70} />
+			{Platform.OS === "web" ? null : <LogoComponent size={70} />}
 		</View>
 	);
 };

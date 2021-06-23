@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, Text } from "react-native";
 import { Provider, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 
 import store from "./src/redux/Store";
 import SplashScreen from "./src/routes/SplashScreen";
 import AuthScreen from "./src/routes/AuthScreen";
+import OnboardingScreen from "./src/routes/OnboardingScreen";
 
 const AppWrapper = () => {
 	return (
@@ -22,6 +23,7 @@ const App = () => {
 
 	return (
 		<NavigationContainer>
+			{console.log(screenType)}
 			<SafeAreaView style={styles.container}>
 				<StatusBar
 					animated={true}
@@ -37,7 +39,7 @@ const App = () => {
 				) : screenType === "auth" ? (
 					<AuthScreen />
 				) : (
-					<Text>This is onboarding screen</Text>
+					<OnboardingScreen />
 				)}
 			</SafeAreaView>
 		</NavigationContainer>

@@ -5,23 +5,30 @@ import {
 	View,
 	StyleSheet,
 	ToastAndroid,
+	Platform,
 } from "react-native";
 import * as Google from "expo-google-app-auth";
 import AppLoading from "expo-app-loading";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
+import { useDispatch } from "react-redux";
 
+import { onboardingGoogleInfo } from "../redux/actions/Auth";
+import { routeToOnboarding, routeToMain } from "../redux/actions/Routing";
 import { googleAuthConfig } from "../config/Config";
 import LogoComponent from "../components/Logo";
 import { setToken } from "../utils/AsyncStorage";
+import { serverUrl } from "../config/Config";
 
 const AuthScreen = () => {
+	let dispatch = useDispatch();
+
 	const handleLogin = async () => {
 		try {
 			let message = await Google.logInAsync(googleAuthConfig);
 
 			if (message.type === "success") {
 				let { name, email, id, photoUrl } = message.user;
-				fetch("http://192.168.1.10:8080/api/v1/user/exists", {
+				fetch(serverUrl + "/api/v1/user/exists", {
 					method: "post",
 					headers: {
 						"content-type": "application/json",
@@ -32,20 +39,31 @@ const AuthScreen = () => {
 					}),
 				})
 					.then((res) => res.json())
-					.then((data) => {
+					.then(async (data) => {
 						if (data.type === "error") {
-							switch (data.status) {
-								case 404:
-								// move to onboarding
-								default:
-									return ToastAndroid.show("Error!", ToastAndroid.SHORT);
+							if (data.status === 404) {
+								(function () {
+									console.log("function called once");
+									dispatch(
+										onboardingGoogleInfo({
+											fullName: name,
+											email: email,
+											googleUid: id,
+											profileImage: photoUrl,
+										})
+									);
+									console.log("function called twice");
+									dispatch(routeToOnboarding());
+								})();
+							} else {
+								return ToastAndroid.show("Error!", ToastAndroid.SHORT);
 							}
 						} else {
 							let tokenSet = await setToken(data.payload.jwtToken);
 							if (tokenSet.error) {
 								return ToastAndroid.show("Error!", ToastAndroid.SHORT);
 							}
-							// move to app
+							return dispatch(routeToMain());
 						}
 					})
 					.catch((err) => ToastAndroid.show("Error!", ToastAndroid.SHORT));
@@ -68,7 +86,7 @@ const AuthScreen = () => {
 		return (
 			<View style={styles.container}>
 				<View style={styles.headerContainer}>
-					<LogoComponent size={50} />
+					{Platform.OS === "web" ? null : <LogoComponent size={50} />}
 					<View style={styles.textContainer}>
 						<Text style={styles.headingText}>polyevents</Text>
 						<Text style={styles.subHeadingText}>Marketplace of events!</Text>
