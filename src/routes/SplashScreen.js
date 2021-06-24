@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { getToken } from "../utils/AsyncStorage";
 import LogoComponent from "../components/Logo";
 import { routeToAuth, routeToMain } from "../redux/actions/Routing";
+import { login } from "../redux/actions/Auth";
 
 const SplashScreen = ({ setSplash }) => {
 	let dispatch = useDispatch();
@@ -15,7 +16,8 @@ const SplashScreen = ({ setSplash }) => {
 			if (token.error) {
 				return dispatch(routeToAuth());
 			} else {
-				return dispatch(routeToMain());
+				dispatch(login());
+				dispatch(routeToMain());
 			}
 		})();
 	}, []);
@@ -30,8 +32,10 @@ const SplashScreen = ({ setSplash }) => {
 const styles = StyleSheet.create({
 	container: {
 		display: "flex",
+		flex: 1,
 		flexDirection: "column",
 		justifyContent: "center",
+		alignItems: "center",
 	},
 });
 

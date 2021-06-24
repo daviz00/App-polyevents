@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 import { Provider, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 
@@ -8,6 +8,7 @@ import store from "./src/redux/Store";
 import SplashScreen from "./src/routes/SplashScreen";
 import AuthScreen from "./src/routes/AuthScreen";
 import OnboardingScreen from "./src/routes/OnboardingScreen";
+import MainAppScreen from "./src/routes/MainAppScreen";
 
 const AppWrapper = () => {
 	return (
@@ -23,36 +24,27 @@ const App = () => {
 
 	return (
 		<NavigationContainer>
-			{console.log(screenType)}
-			<SafeAreaView style={styles.container}>
+			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar
 					animated={true}
-					backgroundColor="#066786"
+					backgroundColor="transparent"
 					barStyle="default"
 					showHideTransition={true}
 					hidden={false}
 				/>
-				{screenType === "splash" ? (
+				<OnboardingScreen />
+				{/* {screenType === "splash" ? (
 					<SplashScreen />
 				) : user ? (
-					<Text>This is main screen</Text>
+					<MainAppScreen />
 				) : screenType === "auth" ? (
 					<AuthScreen />
 				) : (
 					<OnboardingScreen />
-				)}
+				)} */}
 			</SafeAreaView>
 		</NavigationContainer>
 	);
 };
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-});
 
 export default AppWrapper;

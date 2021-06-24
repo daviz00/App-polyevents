@@ -13,7 +13,8 @@ import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import { useDispatch } from "react-redux";
 
 import { onboardingGoogleInfo } from "../redux/actions/Auth";
-import { routeToOnboarding, routeToMain } from "../redux/actions/Routing";
+import { routeToOnboarding } from "../redux/actions/Routing";
+import { login } from "../redux/actions/Auth";
 import { googleAuthConfig } from "../config/Config";
 import LogoComponent from "../components/Logo";
 import { setToken } from "../utils/AsyncStorage";
@@ -28,6 +29,7 @@ const AuthScreen = () => {
 
 			if (message.type === "success") {
 				let { name, email, id, photoUrl } = message.user;
+				console.log(email, id);
 				fetch(serverUrl + "/api/v1/user/exists", {
 					method: "post",
 					headers: {
@@ -42,19 +44,15 @@ const AuthScreen = () => {
 					.then(async (data) => {
 						if (data.type === "error") {
 							if (data.status === 404) {
-								(function () {
-									console.log("function called once");
-									dispatch(
-										onboardingGoogleInfo({
-											fullName: name,
-											email: email,
-											googleUid: id,
-											profileImage: photoUrl,
-										})
-									);
-									console.log("function called twice");
-									dispatch(routeToOnboarding());
-								})();
+								// dispatch(
+								// 	onboardingGoogleInfo({
+								// 		fullName: name,
+								// 		email: email,
+								// 		googleUid: id,
+								// 		profileImage: photoUrl,
+								// 	})
+								// );
+								dispatch(routeToOnboarding());
 							} else {
 								return ToastAndroid.show("Error!", ToastAndroid.SHORT);
 							}
@@ -63,7 +61,7 @@ const AuthScreen = () => {
 							if (tokenSet.error) {
 								return ToastAndroid.show("Error!", ToastAndroid.SHORT);
 							}
-							return dispatch(routeToMain());
+							return dispatch(login());
 						}
 					})
 					.catch((err) => ToastAndroid.show("Error!", ToastAndroid.SHORT));
@@ -93,7 +91,14 @@ const AuthScreen = () => {
 					</View>
 				</View>
 				<View style={styles.loginContainer}>
-					<TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+					<TouchableOpacity
+						onPress={
+							Platform.OS === "web"
+								? () => dispatch(routeToOnboarding())
+								: handleLogin
+						}
+						style={styles.loginButton}
+					>
 						<Text style={styles.buttonText}>
 							<Text>Continue with Google </Text>
 							{/* <Text style={styles.buttonTextBold}>G</Text> */}
