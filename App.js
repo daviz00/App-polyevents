@@ -27,12 +27,12 @@ const App = () => {
 			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar
 					animated={true}
-					backgroundColor="transparent"
+					backgroundColor="grey"
 					barStyle="default"
 					showHideTransition={true}
 					hidden={false}
 				/>
-				<OnboardingScreen />
+				<MainAppScreen />
 				{/* {screenType === "splash" ? (
 					<SplashScreen />
 				) : user ? (

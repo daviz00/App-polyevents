@@ -3,7 +3,7 @@ import { View, StyleSheet, Platform } from "react-native";
 import { useDispatch } from "react-redux";
 
 import { getToken } from "../utils/AsyncStorage";
-import LogoComponent from "../components/Logo";
+import LogoComponent from "../components/LogoComponent";
 import { routeToAuth, routeToMain } from "../redux/actions/Routing";
 import { login } from "../redux/actions/Auth";
 

@@ -16,7 +16,7 @@ import { onboardingGoogleInfo } from "../redux/actions/Auth";
 import { routeToOnboarding } from "../redux/actions/Routing";
 import { login } from "../redux/actions/Auth";
 import { googleAuthConfig } from "../config/Config";
-import LogoComponent from "../components/Logo";
+import LogoComponent from "../components/LogoComponent";
 import { setToken } from "../utils/AsyncStorage";
 import { serverUrl } from "../config/Config";
 
