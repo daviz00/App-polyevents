@@ -20,6 +20,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 import { serverUrl } from "../../config/Config";
 import checkUsername from "../../utils/UsernameRegexTester";
+import ProfileImageContainer from "../../components/ProfileImageContainer";
 
 const CollectUsernameScreen = (props) => {
 	const [userName, setUsername] = useState("");
@@ -118,23 +119,10 @@ const CollectUsernameScreen = (props) => {
 							</TouchableOpacity>
 						</View>
 						<View style={styles.introduction}>
-							<View
-								style={{
-									borderColor: "#e7e7e8",
-									borderWidth: 4,
-									padding: 4,
-									borderRadius: 64,
-								}}
-							>
-								<View style={styles.imageContainer}>
-									<Image
-										source={{
-											uri: "https://avatars.githubusercontent.com/u/51760795?v=4",
-										}}
-										style={styles.image}
-									/>
-								</View>
-							</View>
+							<ProfileImageContainer
+								url={"https://avatars.githubusercontent.com/u/51760795?v=4"}
+								size={120}
+							/>
 							<View style={styles.textIntroduction}>
 								<Text style={styles.introductionWish}>Good Evening!</Text>
 								<Text style={styles.introductionName}>Aditya Gupta</Text>
@@ -225,15 +213,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		alignItems: "center",
 	},
-	imageContainer: {
-		elevation: 10,
-		borderRadius: 60,
-	},
-	image: {
-		width: 120,
-		height: 120,
-		borderRadius: 60,
-	},
+
 	textIntroduction: {
 		marginTop: 20,
 	},

@@ -27,8 +27,8 @@ const App = () => {
 			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar
 					animated={true}
-					backgroundColor="grey"
-					barStyle="default"
+					// backgroundColor="black"
+					barStyle="dark-content"
 					showHideTransition={true}
 					hidden={false}
 				/>

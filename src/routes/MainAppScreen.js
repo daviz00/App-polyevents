@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ProfileScreen from "../screens/Profile/ProfileScreen";
+import ProfileScreen from "../screens/Profile/ProfileScreenRouter";
 import { AntDesign, MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
