@@ -7,7 +7,6 @@ import {
 	ToastAndroid,
 	TouchableWithoutFeedback,
 	Text,
-	Image,
 	Keyboard,
 } from "react-native";
 import AppLoading from "expo-app-loading";

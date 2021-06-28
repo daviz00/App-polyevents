@@ -12,24 +12,27 @@ import AppLoading from "expo-app-loading";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import { useDispatch } from "react-redux";
 
-import { onboardingGoogleInfo } from "../redux/actions/Auth";
-import { routeToOnboarding } from "../redux/actions/Routing";
+import LogoComponent from "../components/LogoComponent";
+import { onboardingGoogleInfo } from "../redux/actions/UserInfo";
+import { routeToOnboarding, routeToMain } from "../redux/actions/Routing";
 import { login } from "../redux/actions/Auth";
 import { googleAuthConfig } from "../config/Config";
-import LogoComponent from "../components/LogoComponent";
-import { setToken } from "../utils/AsyncStorage";
 import { serverUrl } from "../config/Config";
+import { setToken } from "../utils/AsyncStorage";
+import handleTokenName from "../utils/TokenNameHandler";
 
 const AuthScreen = () => {
+	const [isLoading, setLoading] = useState(false);
+
 	let dispatch = useDispatch();
 
 	const handleLogin = async () => {
+		setLoading(() => true);
 		try {
 			let message = await Google.logInAsync(googleAuthConfig);
 
 			if (message.type === "success") {
 				let { name, email, id, photoUrl } = message.user;
-				console.log(email, id);
 				fetch(serverUrl + "/api/v1/user/exists", {
 					method: "post",
 					headers: {
@@ -44,23 +47,26 @@ const AuthScreen = () => {
 					.then(async (data) => {
 						if (data.type === "error") {
 							if (data.status === 404) {
-								// dispatch(
-								// 	onboardingGoogleInfo({
-								// 		fullName: name,
-								// 		email: email,
-								// 		googleUid: id,
-								// 		profileImage: photoUrl,
-								// 	})
-								// );
+								dispatch(
+									onboardingGoogleInfo({
+										fullName: name,
+										email: email,
+										googleUid: id,
+										profileImage: photoUrl,
+									})
+								);
 								dispatch(routeToOnboarding());
-							} else {
-								return ToastAndroid.show("Error!", ToastAndroid.SHORT);
-							}
+								return;
+							} else return ToastAndroid.show("Error!", ToastAndroid.SHORT);
 						} else {
-							let tokenSet = await setToken(data.payload.jwtToken);
-							if (tokenSet.error) {
+							let tokenSet = await setToken(
+								handleTokenName("AUTH"),
+								data.payload.jwtToken
+							);
+							if (tokenSet.error)
 								return ToastAndroid.show("Error!", ToastAndroid.SHORT);
-							}
+
+							dispatch(routeToMain());
 							return dispatch(login());
 						}
 					})
@@ -71,6 +77,7 @@ const AuthScreen = () => {
 		} catch (err) {
 			return ToastAndroid.show("Error!", ToastAndroid.SHORT);
 		} finally {
+			setLoading(() => false);
 		}
 	};
 
@@ -99,6 +106,7 @@ const AuthScreen = () => {
 						}
 						style={styles.loginButton}
 					>
+						{/* TODO: ADD LOADING SPINNER ON BUTTON AFTER CLICKING */}
 						<Text style={styles.buttonText}>
 							<Text>Continue with Google </Text>
 							{/* <Text style={styles.buttonTextBold}>G</Text> */}

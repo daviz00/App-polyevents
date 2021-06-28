@@ -1,30 +1,31 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 
-import { getToken } from "../utils/AsyncStorage";
 import LogoComponent from "../components/LogoComponent";
 import { routeToAuth, routeToMain } from "../redux/actions/Routing";
 import { login } from "../redux/actions/Auth";
+import { getToken } from "../utils/AsyncStorage";
+import handleTokenName from "../utils/TokenNameHandler";
 
-const SplashScreen = ({ setSplash }) => {
+const SplashScreen = () => {
 	let dispatch = useDispatch();
 
 	useEffect(() => {
 		(async () => {
-			let token = await getToken();
+			let token = await getToken(handleTokenName("AUTH"));
 			if (token.error) {
 				return dispatch(routeToAuth());
 			} else {
 				dispatch(login());
-				dispatch(routeToMain());
+				return dispatch(routeToMain());
 			}
 		})();
 	}, []);
 
 	return (
 		<View style={styles.container}>
-			{Platform.OS === "web" ? null : <LogoComponent size={70} />}
+			<LogoComponent size={70} />
 		</View>
 	);
 };

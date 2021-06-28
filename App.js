@@ -19,7 +19,7 @@ const AppWrapper = () => {
 };
 
 const App = () => {
-	let user = useSelector((state) => state.isUserLoggedReducer);
+	let isUserThere = useSelector((state) => state.isUserLoggedReducer);
 	let screenType = useSelector((state) => state.activeRouteReducer);
 
 	return (
@@ -27,21 +27,19 @@ const App = () => {
 			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar
 					animated={true}
-					// backgroundColor="black"
 					barStyle="dark-content"
 					showHideTransition={true}
 					hidden={false}
 				/>
-				<MainAppScreen />
-				{/* {screenType === "splash" ? (
+				{screenType === "splash" ? (
 					<SplashScreen />
-				) : user ? (
+				) : isUserThere ? (
 					<MainAppScreen />
-				) : screenType === "auth" ? (
-					<AuthScreen />
-				) : (
+				) : screenType === "onboarding" ? (
 					<OnboardingScreen />
-				)} */}
+				) : (
+					<AuthScreen />
+				)}
 			</SafeAreaView>
 		</NavigationContainer>
 	);

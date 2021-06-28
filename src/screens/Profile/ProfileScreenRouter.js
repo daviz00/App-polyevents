@@ -1,12 +1,22 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import {
+	Text,
+	View,
+	StyleSheet,
+	ToastAndroid,
+	TouchableOpacity,
+} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import AppLoading from "expo-app-loading";
+import { useDispatch } from "react-redux";
 
 import LogoComponent from "../../components/LogoComponent";
 import ProfileScreen from "./ProfileScreen";
+import { removeToken } from "../../utils/AsyncStorage";
+import handleTokenName from "../../utils/TokenNameHandler";
+import { logout } from "../../redux/actions/Auth";
 
 const Stack = createStackNavigator();
 
@@ -36,6 +46,17 @@ const HeaderTitle = () => {
 };
 
 const ProfileScreenRouter = () => {
+	const dispatch = useDispatch();
+
+	const handleLogout = async () => {
+		let newToken = await removeToken(handleTokenName("AUTH"));
+		if (newToken.message) {
+			dispatch(logout());
+			dispatch();
+		} else {
+			return ToastAndroid.show("Unable to logout!", ToastAndroid.SHORT);
+		}
+	};
 	return (
 		<Stack.Navigator>
 			<Stack.Screen
@@ -44,12 +65,14 @@ const ProfileScreenRouter = () => {
 				options={{
 					headerTitle: <HeaderTitle />,
 					headerRight: () => (
-						<MaterialIcons
-							name="logout"
-							size={24}
-							color="black"
-							style={styles.logoutButton}
-						/>
+						<TouchableOpacity onPress={handleLogout}>
+							<MaterialIcons
+								name="logout"
+								size={24}
+								color="black"
+								style={styles.logoutButton}
+							/>
+						</TouchableOpacity>
 					),
 				}}
 			/>

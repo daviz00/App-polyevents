@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import InformationScreen from "../screens/Onboarding/InformationScreen";
 import CollectUsernameScreen from "../screens/Onboarding/CollectUsernameScreen";
+import CollectMarketsFollowed from "../screens/Onboarding/CollectMarketsFollowed";
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,13 @@ const OnboardingScreen = () => {
 				component={CollectUsernameScreen}
 				initialParams={{
 					key: 4,
+				}}
+			/>
+			<Stack.Screen
+				name="InfoScreen5"
+				component={CollectMarketsFollowed}
+				initialParams={{
+					key: 5,
 				}}
 			/>
 		</Stack.Navigator>

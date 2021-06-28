@@ -7,7 +7,7 @@ const activeRouteReducer = (state = "splash", action) => {
 		case "ROUTE_TO_MAIN":
 			return "main";
 		default:
-			return "splash";
+			return state;
 	}
 };
 
