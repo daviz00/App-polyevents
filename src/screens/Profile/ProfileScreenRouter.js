@@ -49,10 +49,9 @@ const ProfileScreenRouter = () => {
 	const dispatch = useDispatch();
 
 	const handleLogout = async () => {
-		let newToken = await removeToken(handleTokenName("AUTH"));
-		if (newToken.message) {
+		let removedToken = await removeToken(handleTokenName("AUTH"));
+		if (removedToken.message) {
 			dispatch(logout());
-			dispatch();
 		} else {
 			return ToastAndroid.show("Unable to logout!", ToastAndroid.SHORT);
 		}

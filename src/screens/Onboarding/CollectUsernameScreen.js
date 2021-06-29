@@ -16,12 +16,19 @@ import {
 	Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 import { AntDesign } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
 
+import {
+	onboardingUsername,
+	onboardingReferralCode,
+} from "../../redux/actions/UserInfo";
 import { serverUrl } from "../../config/Config";
 import checkUsername from "../../utils/UsernameRegexTester";
 import ProfileImageContainer from "../../components/ProfileImageContainer";
 
 const CollectUsernameScreen = (props) => {
+	const dispatch = useDispatch();
+
 	const [userName, setUsername] = useState("");
 	const [referral, setReferral] = useState("");
 	const [isUsernameCorrect, setIsUsernameCorrect] = useState(false);
@@ -101,8 +108,10 @@ const CollectUsernameScreen = (props) => {
 				});
 		}
 		//dispatch to reducer
+		dispatch(onboardingReferralCode(referral));
+		dispatch(onboardingUsername(userName));
 
-		props.navigation.navigate("InfoScreen3");
+		props.navigation.navigate("InfoScreen5");
 	};
 
 	if (!fontsLoaded) {

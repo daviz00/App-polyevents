@@ -28,10 +28,12 @@ const App = () => {
 				<StatusBar
 					animated={true}
 					barStyle="dark-content"
+					backgroundColor="white"
 					showHideTransition={true}
 					hidden={false}
 				/>
-				{screenType === "splash" ? (
+				<MainAppScreen />
+				{/* {screenType === "splash" ? (
 					<SplashScreen />
 				) : isUserThere ? (
 					<MainAppScreen />
@@ -39,7 +41,7 @@ const App = () => {
 					<OnboardingScreen />
 				) : (
 					<AuthScreen />
-				)}
+				)} */}
 			</SafeAreaView>
 		</NavigationContainer>
 	);

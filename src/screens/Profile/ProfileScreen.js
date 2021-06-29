@@ -32,6 +32,8 @@ const ProfileScreen = () => {
 	let userInfo = useSelector((state) => state.loggedUserReducer);
 
 	useEffect(() => {
+		if (!userInfo) return;
+		if (userInfo.referralCode) return;
 		(async () => {
 			fetch(serverUrl + "/api/v1/user/referral-code", {
 				method: "get",
@@ -79,7 +81,7 @@ const ProfileScreen = () => {
 		Poppins_700Bold,
 	});
 
-	if (!userInfo.userName) {
+	if (!userInfo) {
 		return (
 			<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
 				<Text>Loading!</Text>
@@ -91,7 +93,6 @@ const ProfileScreen = () => {
 		} else {
 			return (
 				<ScrollView>
-					{console.log(userInfo)}
 					<View style={styles.container}>
 						<View style={styles.infoContainer}>
 							<ProfileImageContainer url={userInfo.profileImage} size={80} />
