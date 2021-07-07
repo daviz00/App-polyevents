@@ -52,7 +52,7 @@ const CollectUsernameScreen = (props) => {
 		if (userName.length < 6 || userName.length > 15) {
 			setIsUsernameCorrect(() => false);
 			setUsernameErrorMessage(
-				() => "username can only contain small letters and numbers"
+				() => "Username can only contain small letters and numbers"
 			);
 			return;
 		}
@@ -61,7 +61,7 @@ const CollectUsernameScreen = (props) => {
 		if (!isUsernameValid) {
 			setIsUsernameCorrect(() => false);
 			setUsernameErrorMessage(
-				() => "username can only contain small letters and numbers"
+				() => "Username can only contain small letters and numbers"
 			);
 			return;
 		}
@@ -73,12 +73,12 @@ const CollectUsernameScreen = (props) => {
 					if (data.status === 400) {
 						setIsUsernameCorrect(() => false);
 						setUsernameErrorMessage(
-							() => "username can only contain small letters and numbers"
+							() => "Username can only contain small letters and numbers"
 						);
 						return;
 					} else if (data.status === 409) {
 						setIsUsernameCorrect(() => false);
-						setUsernameErrorMessage(() => "username already exists");
+						setUsernameErrorMessage(() => "Username already exists");
 						return;
 					} else {
 						return ToastAndroid.show("Error 1", ToastAndroid.SHORT);
@@ -132,7 +132,7 @@ const CollectUsernameScreen = (props) => {
 								size={120}
 							/>
 							<View style={styles.textIntroduction}>
-								<Text style={styles.introductionWish}>Good Evening!</Text>
+								<Text style={styles.introductionWish}>Welcome Abord!</Text>
 								<Text style={styles.introductionName}>Aditya Gupta</Text>
 							</View>
 						</View>
@@ -140,8 +140,31 @@ const CollectUsernameScreen = (props) => {
 					<View style={styles.lowerContainer}>
 						<View style={styles.textContainer}>
 							<View style={{ ...styles.inputContainer, marginBottom: 20 }}>
-								<Text>Create your username</Text>
+								<Text
+									style={
+										userName
+											? isUsernameCorrect
+												? {
+														...styles.textBoxLabel,
+														...styles.textBoxLabelRight,
+												  }
+												: {
+														...styles.textBoxLabel,
+														...styles.textBoxLabelWrong,
+												  }
+											: styles.textBoxLabel
+									}
+								>
+									Create your username
+								</Text>
 								<TextInput
+									color={
+										userName
+											? isUsernameCorrect
+												? "#32b57d"
+												: "#f2296c"
+											: "#1a1a1a"
+									}
 									enablesReturnKeyAutomatically={true}
 									autoCapitalize={"none"}
 									autoCorrect={false}
@@ -149,8 +172,8 @@ const CollectUsernameScreen = (props) => {
 									style={
 										userName
 											? isUsernameCorrect
-												? { ...styles.textInput, ...styles.correctTextInput }
-												: { ...styles.textInput, ...styles.wrongTextInput }
+												? { ...styles.textInput, ...styles.textInputRight }
+												: { ...styles.textInput, ...styles.textInputWrong }
 											: styles.textInput
 									}
 									placeholder="Ex: aditya_krishna"
@@ -166,16 +189,39 @@ const CollectUsernameScreen = (props) => {
 								) : null}
 							</View>
 							<View style={styles.inputContainer}>
-								<Text>Do you have a referral code?</Text>
+								<Text
+									style={
+										referral
+											? isReferralCorrect
+												? {
+														...styles.textBoxLabel,
+														...styles.textBoxLabelRight,
+												  }
+												: {
+														...styles.textBoxLabel,
+														...styles.textBoxLabelWrong,
+												  }
+											: styles.textBoxLabel
+									}
+								>
+									Do you have a referral code?
+								</Text>
 								<TextInput
+									color={
+										referral
+											? isReferralCorrect
+												? "#32b57d"
+												: "#f2296c"
+											: "#1a1a1a"
+									}
 									spellCheck={false}
 									autoCapitalize={"none"}
 									autoCorrect={false}
 									style={
 										referral
 											? isReferralCorrect
-												? { ...styles.textInput, ...styles.correctTextInput }
-												: { ...styles.textInput, ...styles.wrongTextInput }
+												? { ...styles.textInput, ...styles.textInputRight }
+												: { ...styles.textInput, ...styles.textInputWrong }
 											: styles.textInput
 									}
 									placeholder="Ex: Poly_XOXO"
@@ -241,14 +287,41 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
-	textContainer: {},
+	textContainer: {
+		display: "flex",
+		width: "70%",
+	},
 	textInput: {
-		borderColor: "black",
-		borderWidth: 3,
-		width: 220,
+		borderColor: "#1a1a1a",
+		borderWidth: 1,
 		padding: 10,
-		margin: 10,
 		fontFamily: "Poppins_400Regular",
+		marginTop: 3,
+		borderRadius: 7,
+	},
+	textBoxLabel: {
+		color: "#1a1a1a",
+		fontFamily: "Poppins_400Regular",
+		fontSize: 14,
+	},
+
+	textInputWrong: {
+		borderColor: "#f2296c",
+	},
+	textInputRight: {
+		borderColor: "#32b57d",
+	},
+	textBoxLabelWrong: {
+		color: "#f2296c",
+	},
+	textBoxLabelRight: {
+		color: "#32b57d",
+	},
+	wrongInputMessage: {
+		marginTop: 3,
+		color: "#f2296c",
+		fontFamily: "Poppins_400Regular",
+		fontSize: 10,
 	},
 	button: {
 		backgroundColor: "#066786",

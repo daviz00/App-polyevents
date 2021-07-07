@@ -4,11 +4,11 @@ import { SafeAreaView } from "react-native";
 import { Provider, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 
-import store from "./src/redux/Store";
 import SplashScreen from "./src/routes/SplashScreen";
 import AuthScreen from "./src/routes/AuthScreen";
 import OnboardingScreen from "./src/routes/OnboardingScreen";
 import MainAppScreen from "./src/routes/MainAppScreen";
+import store from "./src/redux/Store";
 
 const AppWrapper = () => {
 	return (
@@ -19,6 +19,11 @@ const AppWrapper = () => {
 };
 
 const App = () => {
+	/*
+		isUserThere: true/false
+		screenType: auth/onboarding/main/splash && default value = splash
+	*/
+
 	let isUserThere = useSelector((state) => state.isUserLoggedReducer);
 	let screenType = useSelector((state) => state.activeRouteReducer);
 
@@ -32,7 +37,7 @@ const App = () => {
 					showHideTransition={true}
 					hidden={false}
 				/>
-				<MainAppScreen />
+				<OnboardingScreen />
 				{/* {screenType === "splash" ? (
 					<SplashScreen />
 				) : isUserThere ? (

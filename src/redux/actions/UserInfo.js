@@ -39,3 +39,10 @@ export const onboardingMarketsFollowed = (info) => {
 		payload: { marketsFollowed: info },
 	};
 };
+
+export const updateMarketsFollowed = (info) => {
+	return {
+		type: "UPDATE_USER_MARKETS",
+		payload: { marketsFollowed: info },
+	};
+};

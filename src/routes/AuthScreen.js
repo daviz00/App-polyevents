@@ -6,6 +6,7 @@ import {
 	StyleSheet,
 	ToastAndroid,
 	Platform,
+	ActivityIndicator,
 } from "react-native";
 import * as Google from "expo-google-app-auth";
 import AppLoading from "expo-app-loading";
@@ -98,22 +99,16 @@ const AuthScreen = () => {
 					</View>
 				</View>
 				<View style={styles.loginContainer}>
-					<TouchableOpacity
-						onPress={
-							Platform.OS === "web"
-								? () => dispatch(routeToOnboarding())
-								: handleLogin
-						}
-						style={styles.loginButton}
-					>
+					<TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+						{/* TODO: Remove TouchableOpacity and add Pressable API */}
 						{/* TODO: ADD LOADING SPINNER ON BUTTON AFTER CLICKING */}
 						<Text style={styles.buttonText}>
 							<Text>Continue with Google </Text>
-							{/* <Text style={styles.buttonTextBold}>G</Text> */}
 						</Text>
 					</TouchableOpacity>
 					<Text style={styles.remarkText}>
 						<Text>By registering, I agree to Polyevent's </Text>
+						{/* TODO: Add a webview for T&C */}
 						<Text style={styles.remarkTextUnderline}>T&C</Text>
 					</Text>
 				</View>

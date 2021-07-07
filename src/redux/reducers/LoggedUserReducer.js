@@ -4,6 +4,8 @@ const loggedUserReducer = (state = null, action) => {
 			return { ...state, ...action.payload };
 		case "SAVE_REFERRAL_CODE":
 			return { ...state, ...action.payload };
+		case "UPDATE_USER_MARKETS":
+			return { ...state, ...action.payload };
 		default:
 			return state;
 	}

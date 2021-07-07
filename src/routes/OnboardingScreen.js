@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import InformationScreen from "../screens/Onboarding/InformationScreen";
 import CollectUsernameScreen from "../screens/Onboarding/CollectUsernameScreen";
 import CollectMarketsFollowed from "../screens/Onboarding/CollectMarketsFollowed";
-import { serverUrl } from "../config/Config";
 import { addMarkets } from "../redux/actions/Markets";
-import AllDoneScreen from "../screens/Onboarding/AllDoneScreen";
+import { serverUrl } from "../config/Config";
+import renameObjectKeys from "../utils/ObjectKeysRenamer";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,8 @@ const OnboardingScreen = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				if (data.status === 200) {
-					dispatch(addMarkets(data.payload));
+					let newPayload = renameObjectKeys(data.payload);
+					dispatch(addMarkets(newPayload));
 				}
 			})
 			.catch((err) => {
@@ -73,13 +74,6 @@ const OnboardingScreen = () => {
 				component={CollectMarketsFollowed}
 				initialParams={{
 					key: 5,
-				}}
-			/>
-			<Stack.Screen
-				name="InfoScreen6"
-				component={AllDoneScreen}
-				initialParams={{
-					key: 6,
 				}}
 			/>
 		</Stack.Navigator>

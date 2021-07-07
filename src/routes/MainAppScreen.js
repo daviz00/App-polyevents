@@ -16,12 +16,9 @@ import { getToken, removeToken } from "../utils/AsyncStorage";
 import handleTokenName from "../utils/TokenNameHandler";
 import { setUserProfileDetails } from "../redux/actions/UserInfo";
 import { logout } from "../redux/actions/Auth";
+import HomeScreenRouter from "../screens/Home/HomeScreenRouter";
 
 const Tab = createBottomTabNavigator();
-
-const Home = () => {
-	return <></>;
-};
 
 const Portfolio = () => {
 	return <></>;
@@ -50,6 +47,7 @@ const MainAppScreen = () => {
 			})
 				.then((res) => res.json())
 				.then((data) => {
+					console.log(data.payload);
 					if (data.status === 200) {
 						let email = data.payload.email;
 						let roleId = data.payload.id;
@@ -114,7 +112,7 @@ const MainAppScreen = () => {
 			>
 				<Tab.Screen
 					name="Home"
-					component={Home}
+					component={HomeScreenRouter}
 					options={{
 						tabBarIcon: ({ focused }) => {
 							return (
