@@ -37,8 +37,8 @@ const App = () => {
 					showHideTransition={true}
 					hidden={false}
 				/>
-				<OnboardingScreen />
-				{/* {screenType === "splash" ? (
+				{/* <OnboardingScreen /> */}
+				{screenType === "splash" ? (
 					<SplashScreen />
 				) : isUserThere ? (
 					<MainAppScreen />
@@ -46,7 +46,7 @@ const App = () => {
 					<OnboardingScreen />
 				) : (
 					<AuthScreen />
-				)} */}
+				)}
 			</SafeAreaView>
 		</NavigationContainer>
 	);

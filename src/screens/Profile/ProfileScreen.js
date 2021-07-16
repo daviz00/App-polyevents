@@ -18,13 +18,17 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Video } from "expo-av";
 import { useDispatch, useSelector } from "react-redux";
 
+import ChangeUsernameModal from "../../components/ChangeUsernameModal";
 import ProfileImageContainer from "../../components/ProfileImageContainer";
 import { setReferralCode } from "../../redux/actions/UserInfo";
+import { openUsernameChangeModal } from "../../redux/actions/Modals";
 import { serverUrl } from "../../config/Config";
 import { getToken } from "../../utils/AsyncStorage";
 import handleTokenName from "../../utils/TokenNameHandler";
 
 const ProfileScreen = () => {
+	const modalVisible = useSelector((state) => state.usernameChangeModalReducer);
+
 	const video = React.useRef(null);
 
 	const dispatch = useDispatch();
@@ -93,6 +97,7 @@ const ProfileScreen = () => {
 		} else {
 			return (
 				<ScrollView>
+					{modalVisible ? <ChangeUsernameModal /> : null}
 					<View style={styles.container}>
 						<View style={styles.infoContainer}>
 							<ProfileImageContainer url={userInfo.profileImage} size={80} />
@@ -100,7 +105,9 @@ const ProfileScreen = () => {
 							<Text style={styles.fullName}>{userInfo.fullName}</Text>
 							<View style={styles.usernameContainer}>
 								<Text style={styles.username}>{`@${userInfo.userName}`}</Text>
-								<TouchableOpacity>
+								<TouchableOpacity
+									onPress={() => dispatch(openUsernameChangeModal())}
+								>
 									<MaterialCommunityIcons
 										name="pencil-circle-outline"
 										size={24}

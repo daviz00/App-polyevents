@@ -4,7 +4,10 @@ function capitalizeFirstLetter(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// @params: Takes an array of objects
+/*
+ @params: Takes an array of objects
+*/
+
 function convertToCamelCase(key) {
 	let partsOfkey = key.split("_");
 	let newKey = partsOfkey.reduce((acc, string) => {
