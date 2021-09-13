@@ -2,7 +2,6 @@
 
 ![JavaScript](https://img.shields.io/badge/-JavaScript-f7df1e?style=flat-square&logo=javascript&logoColor=black)
 ![React Native](https://img.shields.io/badge/-React_Native-61dafb?style=flat-square&logo=react&logoColor=white)
-![React](https://img.shields.io/badge/-React-61dafb?style=flat-square&logo=react&logoColor=white)
 
 ### Table of Contents  
 - [Introduction](https://github.com/Polyevents/App#introduction)
