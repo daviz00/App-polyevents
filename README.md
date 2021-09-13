@@ -10,7 +10,7 @@
 ## Introduction
 So, you want to use your 6th sense to make some cash real fast? Great! You are in the right place. Just follow these steps and you'll be all set! 
 
-**You can Check the Website <a href='https://polyevents.in'>here</a>**
+**You can Check the landing page <a href='https://polyevents.in'>here</a>**
 
 <img src='https://github.com/Polyevents/App/blob/main/Screenshot%20from%202021-09-13%2009-26-34.png?raw=true' width="300" height="900"/>
 
